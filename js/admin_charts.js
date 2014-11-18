@@ -41,43 +41,6 @@
                 }
             ]
         });
-
-    // ou si la variable data_type dans le table data est égale a chart_top_cat (non utiliser encore)
-    } else if ( 'chart_top_cat' == data.data_type ) {
- 
-        var cat_titles = [],
-            cat_count = [];
- 
-        $( data.post_data ).each(function() {
- 
-            cat_titles.push( this.name );
-            cat_count.push( parseInt( this.count ) );
- 
-        });
- 
-        $('#chart-stats').highcharts({
-            chart: {
-                type: data.chart_type
-            },
-            title: {
-                text: 'Top 5 Categories by Posts'
-            },
-            xAxis: {
-                categories: cat_titles
-            },
-            yAxis: {
-                title: {
-                    text: 'Number of Posts'
-                },
-                tickInterval: 5
-            },
-            series: [
-                {
-                    name: 'Post Count',
-                    data: cat_count
-                }
-            ]
-        });
  
     // ou si la variable data_type dans le table data est égale a "cammenbert"
     } else if ( 'cammenbert' == data.data_type ) {

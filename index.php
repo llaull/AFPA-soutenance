@@ -6,7 +6,7 @@ Description: outils de stats et d'affichages des demandes clients
 Version: beta
 Author: laurent HAZARD
 Author URI: http://laurent-cv.llovem.eu/
-License: GPLv2 or later
+License: 
 */
  
 // Plugin root directory
