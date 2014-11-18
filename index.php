@@ -264,7 +264,8 @@ function demande(){
         <!-- ligne du tableau -->
         <tr class="<?php echo $alternate; ?>">
 
-            <!-- <td>premiere celulle contenant le lien vers la page qui affiche les information d'une demande dont l'id est en envoyer en get -->
+            <!-- premiere celulle contenant le lien vers la page qui affiche les information d'une demande dont l'id est en envoyer en get -->
+            <td>
                 <?php echo '<a href="admin.php?page=demande&id='.$v->id.'">voir</a>'; ?>        
             </td>
 
