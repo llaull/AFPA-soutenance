@@ -1,0 +1,27 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* marges pour le formulaire contenant le select */
+#form_chart {
+    margin: 30px 0;
+}
+
+/* style pour le titre de l'element select */
+#form_chart label {
+    display: inline-block;
+    width: 250px;
+}
+
+/* affiche un cadre vert pour les payements effectués*/
+p.Completed{
+	border: 1px solid green;
+	text-align: center;
+	background-color: #17c42b;
+	padding: 2px;
+}
+/* affiche un cadre orange pour les payements en attente */
+p.waiting_payment{
+	border: 1px solid red;
+	background-color: orange;
+	padding: 2px;
+}
