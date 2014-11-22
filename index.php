@@ -2,7 +2,7 @@
 /*
 Plugin Name: Outils Admin pour voyagezfute.com
 Plugin URI: 
-Description: outils de stats et d'affichages des demandes clients
+Description: outils de stats et d'affichage des demandes clients
 Version: beta
 Author: laurent HAZARD
 Author URI: http://laurent-cv.llovem.eu/
@@ -14,7 +14,7 @@ define( 'ROOT', plugin_dir_url( __FILE__ ) );
  
 /**
  * intégration du plugin dans l'admin WP
- * @return [array] element d'intégration dans WordPress 
+ * @return [array] élement d'intégration dans WordPress 
  */
 function admin_page() {
     add_menu_page( 'Gestions Menu', 'Gestion', 'manage_options', 'demande-menu', 'charts_page', plugins_url( '/outils_voyagerfute/images/icon.png' ));
@@ -33,11 +33,11 @@ add_action( 'admin_menu', 'admin_page' );
 add_action('admin_head', 'styles');
 
 /**
- * verifie la concordance du post et de la variable envoyer depuis le
+ * verifie la concordance du post et de la variable envoyée depuis le
  * select de la page 'charts_page' pour l'envoyer 
- * à la fonction 'chart_add_scripts' qui genere le graphique 
+ * à la fonction 'chart_add_scripts' qui génère le graphique 
  * @param  [string]     $option [string]
- * @return [string]     graphique demander   
+ * @return [string]     graphique demandé   
  */
 function selected_option( $option ) {
     if ( $option == $_POST['chart_data_type'] ) {
@@ -70,7 +70,7 @@ function charts_page() {
 }
  
 /**
- * charge les elements JS et css pour generer un graphique
+ * charge les elements JS et css pour générer un graphique
  * @return [string] html
  */
 function chart_register_scripts() {
@@ -99,7 +99,7 @@ add_action( 'admin_enqueue_scripts', 'chart_register_scripts' );
  */
 function chart_add_scripts( $hook ) {
 
-    // variable global pour effectuer un requete personnalisé mysql
+    // variable globale pour effectuer un requète personnalisée mysql
     global $wpdb;   
 
     //si nous sommes bien dans la bonne page ici  'toplevel_page_demande-menu'
@@ -111,13 +111,13 @@ function chart_add_scripts( $hook ) {
         // si POST n'est pas vide
         if ( isset( $_POST['show_chart'] ) ) {
  
-            //si le graphique demande est celui de 'statCivility'
+            //si le graphique demandé est celui de 'statCivility'
             if ( 'statCivility' == $_POST['chart_data_type'] ) {
  
-                //requete comptant des differentes civility qui sont regroupé afin de mettre en evidence les different type de civility
+                //requete comptant les differentes civility qui sont regroupées afin de mettre en evidence les différents types de civility
                 $statCivility = $wpdb->get_results("SELECT count(civility) AS count, civility AS name FROM users group by civility");
 
-                //tableau d'options qui sera envoyer a 'highcharts.js' pour generer un graphique
+                //tableau d'options qui sera envoyé à 'highcharts.js' pour générer un graphique
                 $data = array(
                     'data_type'  => 'cammenbert',
                     'titre'      => 'proportion homme/femme',
@@ -130,7 +130,7 @@ function chart_add_scripts( $hook ) {
  
             }
  
-            //si le graphique demande est celui de 'destinations'
+            //si le graphique demandé est celui de 'destinations'
             if ( 'destinations' == $_POST['chart_data_type'] ) {
  
                 $categories = $wpdb->get_results("SELECT COUNT(destinationCity) as count, destinationCity AS name  FROM travels group by name order by count DESC limit 0 ,10");
@@ -163,16 +163,15 @@ function styles() {
 
 /**
  * page de demande avec l'historique des clients
- * ainsi que la demandes avec toutes les informations 
- * @return [array] element des demandes de voyage
+ * ainsi que la demande avec toutes les informations 
  */
 function demande(){
 
-    // nécessaire pour faire des requets. 
-    // cette variable global contient les informations de connexion à la basse de données
+    // nécessaire pour faire des requètes. 
+    // cette variable globale contient les informations de connexion à la base de données
     global $wpdb;
 
-    //defini la variable $Order
+    //définit la variable $Order
     if(isset($_GET['sort'])){
 
         $Order = $_GET['sort'];
@@ -182,7 +181,7 @@ function demande(){
         $Order = "travelCommandTime";
     }
 
-    // requet mysql affichant le voyage dont l'id est recu en get
+    // requète mysql affichant le voyage dont l'id est recu en get
     $demande = $wpdb->get_results( 'SELECT *,
                                         U.user_id,
                                         U.civility,
@@ -201,7 +200,7 @@ function demande(){
                                         travels AS T ON U.user_id = T.user_id
                                     WHERE T.id = "'.$_GET['id'].'" ');
 
-    //requete affichant TOUTE les demande du client dont son user_id a été recuperer par la requete du dessus
+    //requète affichant TOUTES les demandes du client dont l'user_id a été recuperé par la requète du dessus
     $demandeMemeUser = $wpdb->get_results( 'SELECT 
                                         U.user_id,
                                         U.civility,
@@ -227,7 +226,7 @@ function demande(){
     echo '<h3>Historique ('.count($demandeMemeUser).')</h3>';
 
 ?>
-    <!-- premiere ligne du tableau affichant l'historique des demandes -->
+    <!-- première ligne du tableau affichant l'historique des demandes -->
     <table class="widefat">
     <thead>
         <tr>
@@ -235,9 +234,9 @@ function demande(){
             <th>Nom / Prenom</th>
             <th>Téléphone</th>
             <!-- 
-                construction du lien pour trier les collones 
+                construction du lien pour trier les colonnes 
                 $id : id du voyage
-                $sort : non de la collone à trié
+                $sort : nom de la colonne à trier
                 $Order : sens du tri
             -->
             <th><a href="admin.php?page=demande&id=<?php echo $_GET['id']; ?>&sort=travelCommandTime&sens=<?php 
@@ -257,19 +256,19 @@ function demande(){
     <!-- boucle affichant pour chaque ligne une demande -->
     <?php foreach ($demandeMemeUser as $v) {?>
 
-    <!-- alterne la class pour faciliter la lecture 
+    <!-- alterne la class CSS pour faciliter la lecture 
     en changeant de couleur une ligne sur deux -->
     <?php $alternate = ( $i % 2 ) ? "alternate" : "null"; $i++?>
 
         <!-- ligne du tableau -->
         <tr class="<?php echo $alternate; ?>">
 
-            <!-- premiere celulle contenant le lien vers la page qui affiche les information d'une demande dont l'id est en envoyer en get -->
+            <!-- première celulle contenant le lien vers la page qui affiche les informations d'une demande dont l'id est envoyé en get -->
             <td>
                 <?php echo '<a href="admin.php?page=demande&id='.$v->id.'">voir</a>'; ?>        
             </td>
 
-            <td> <!-- celulle suivant affichant l'objet surname et lastname decodé eb utf8 car toutes les informations dans la db ne le sont pas -->
+            <td> <!-- celulle suivante affichant les objets surname et lastname decodés en utf8 car toutes les informations dans la db ne le sont pas -->
                 <?php echo utf8_decode($v->surname); ?> <?php echo utf8_decode($v->lastname); ?>    
             </td>
 
@@ -305,10 +304,10 @@ function demande(){
     </tbody>
     </table>
 
-    <!-- affiche les information de la demande selectionner -->
+    <!-- affiche les informations de la demande selectionnée -->
     <?php
 
-    // si different de mr le client sera cliente
+    // si différent de mr le client sera cliente
     if($demande[0]->civility != 'mr') {$e = "e";}
     echo '<h3>Informations client'.$e.'</h3>'; ?>
 
@@ -339,13 +338,13 @@ function demande(){
 
 
 /**
- * page affichant toute les demandes recu sur le site
+ * page affichant toute les demandes recues sur le site
  */
 function les_demandes(){
 
    global $wpdb;
 
-   // options de trie pour la requete (pourrais etre affecter en JS)
+   // option de tri pour la requète (pourrait etre affectée en JS)
     if(isset($_GET['sort'])){
 
         $Order = $_GET['sort'];
@@ -355,7 +354,7 @@ function les_demandes(){
         $Order = "travelCommandTime";
     }
 
-    //requet pour afficher quelques information sur les demandes
+    //requète pour afficher quelques informations sur les demandes
     $demandes = $wpdb->get_results( "SELECT 
     U.user_id,
     U.civility,
@@ -375,7 +374,7 @@ function les_demandes(){
         travels AS T ON U.user_id = T.user_id
     ORDER BY ".$Order." ".$_GET['sens']."" );
 
-    //affiche le nombre de demandes total dans la base
+    //affiche le nombre de demandes totales dans la base
     echo '<div class="wrap"><h2 class="stabilo">Demandes ('.count($demandes).')</h2>';
 
 ?>
@@ -410,10 +409,12 @@ function les_demandes(){
     <tr class="<?php echo $alternate; ?>">
 
         <td>
+            <!-- envoie de l'id de la demande en GET  -->
             <?php echo '<a href="admin.php?page=demande&id='.$v->id.'">voir</a>'; ?>        
         </td>
 
-        <td>        
+        <td> 
+            <!-- celulle suivante affichant les objets surname et lastname decodés en utf8 car toutes les informations dans la db ne le sont pas -->        
             <?php echo utf8_decode($v->surname); ?> <?php echo utf8_decode($v->lastname); ?>    
         </td>
 

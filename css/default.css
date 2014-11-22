@@ -5,20 +5,20 @@
     margin: 30px 0;
 }
 
-/* style pour le titre de l'element select */
+/* style pour le titre de l'élement select */
 #form_chart label {
     display: inline-block;
     width: 250px;
 }
 
-/* affiche un cadre vert pour les payements effectués*/
+/* affiche un cadre vert pour les paiements effectués*/
 p.Completed{
 	border: 1px solid green;
 	text-align: center;
 	background-color: #17c42b;
 	padding: 2px;
 }
-/* affiche un cadre orange pour les payements en attente */
+/* affiche un cadre orange pour les paiements en attente */
 p.waiting_payment{
 	border: 1px solid red;
 	background-color: orange;
